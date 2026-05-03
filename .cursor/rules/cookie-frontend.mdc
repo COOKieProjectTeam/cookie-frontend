@@ -20,3 +20,7 @@ alwaysApply: false
 
 - Вертикаль с API: в задачах заполнять **Companion** → `cookie-backend`.
 - Структура каталогов — FSD-подобная раскладка из tech-stack (`app/`, `features/`, `entities/`, `shared/`).
+
+## Защищённый `main`
+
+Ветка **`main`** защищена: [.claude/rules/protected-main.md](../../.claude/rules/protected-main.md) — ветка → push → **PR → `main`**, в PR указать связь с **issue**.

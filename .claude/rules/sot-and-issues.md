@@ -12,6 +12,11 @@
 
 **Companion:** при вертикали указывать issue в `cookie-backend`.
 
+## Pull Request
+
+- **`main`** защищён: только ветка + **PR**. См. `.claude/rules/protected-main.md`.
+- В описании PR — ссылка на **issue** (`Refs`/`Closes #NN`).
+
 ## Стек (сверка)
 
 Канон: **Next.js 14**, **React 18**, **TS 5**, TanStack Query, Zustand, styled-components, RHF + Zod, Axios, MSW — см. `architecture/technical/tech-stack.md` в vault.
