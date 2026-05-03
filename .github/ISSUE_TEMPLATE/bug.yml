@@ -1,0 +1,34 @@
+name: Bug
+description: Дефект UI или клиента
+title: '[Bug] '
+labels: []
+body:
+  - type: markdown
+    attributes:
+      value: |
+        **cookie-frontend.** Браузер/версия, шаги, скрин/видео по возможности.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+    validations:
+      required: true
+  - type: textarea
+    id: repro
+    attributes:
+      label: Steps to reproduce
+    validations:
+      required: true
+  - type: textarea
+    id: trace
+    attributes:
+      label: Trace (optional)
+      description: FR, маршрут, компонент.
+    validations:
+      required: false
+  - type: textarea
+    id: notes
+    attributes:
+      label: Notes
+    validations:
+      required: false
