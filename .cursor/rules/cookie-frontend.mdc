@@ -1,0 +1,22 @@
+---
+description: COOKie frontend — источники правды, стек, задачи GitHub
+globs:
+  - "**/*.tsx"
+  - "**/*.ts"
+  - "**/*.css"
+  - ".github/**/*"
+alwaysApply: false
+---
+
+# COOKie — cookie-frontend
+
+## Источники правды
+
+- **Тексты требований и UI (канон):** Obsidian vault — `Knowledge/Development/Projects/COOKie/` (SRS/FRS и др.); не вставлять полные тексты спеки в issues.
+- **Формат issues:** `.github/ISSUE_TEMPLATE/task.yml`; процесс — `Knowledge/Development/Projects/COOKie/process/github-issue-format.md` в vault.
+- **Техстек канон:** vault `architecture/technical/tech-stack.md` — **Next.js 14** (App Router), **React 18**, **TypeScript 5**, TanStack Query 5, Zustand 4, styled-components 6, React Hook Form + Zod, Axios, **MSW** в dev против `/api/v1/*` по **swagger**. При расхождении с зависимостями репо — правьте код/депы к канону или оформляйте CR.
+
+## Практика
+
+- Вертикаль с API: в задачах заполнять **Companion** → `cookie-backend`.
+- Структура каталогов — FSD-подобная раскладка из tech-stack (`app/`, `features/`, `entities/`, `shared/`).
