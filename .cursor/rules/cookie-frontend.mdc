@@ -15,11 +15,13 @@ alwaysApply: false
 - **Тексты требований и UI (канон):** Obsidian vault — `Knowledge/Development/Projects/COOKie/` (SRS/FRS и др.); не вставлять полные тексты спеки в issues.
 - **Формат issues:** `.github/ISSUE_TEMPLATE/task.yml`; процесс — `Knowledge/Development/Projects/COOKie/process/github-issue-format.md` в vault.
 - **Техстек канон:** vault `architecture/technical/tech-stack.md` — **Next.js 14** (App Router), **React 18**, **TypeScript 5**, TanStack Query 5, Zustand 4, styled-components 6, React Hook Form + Zod, Axios, **MSW** в dev против `/api/v1/*` по **swagger**. При расхождении с зависимостями репо — правьте код/депы к канону или оформляйте CR.
+- **Не тащите полный SRS/FRS в PR:** истина процесса — **vault**, **поля/issue с Trace**, последний контракт **swagger** кодового backend и утверждённые golden paths этого репозитория после появления кода.
 
 ## Практика
 
 - Вертикаль с API: в задачах заполнять **Companion** → `cookie-backend`.
 - Структура каталогов — FSD-подобная раскладка из tech-stack (`app/`, `features/`, `entities/`, `shared/`).
+- **Доска org:** один Projects **«cookie»** ([HTTPS](https://github.com/orgs/COOKieProjectTeam/projects/2)), для области работы использовать метки **`area:frontend`** / **`area:backend`** / **`area:infra`** / **`area:docs`** там, где задача не однозначно «этот компонент»; подробнее в зеркале [github-project-cookie](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-project-cookie.md).
 
 ## Защищённый `main`
 

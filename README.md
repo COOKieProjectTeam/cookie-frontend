@@ -158,13 +158,13 @@ npm run test:ui
 - Keep components small and focused
 - Co-locate tests with components
 
+## GitHub Projects v2 («cookie»)
+
+Новые **issues** в этом репозитории автоматически попадают в org-проект [cookie (#2)](https://github.com/orgs/COOKieProjectTeam/projects/2). Для успешной работы GitHub Actions задайте в настройках репозитория секрет **`ADD_TO_PROJECT_PAT`** (scopes и проверку — см. [github-project-cookie](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-project-cookie.md)).
+
 ## Contributing
 
-1. Follow the [Git Workflow Guide](https://github.com/COOKAITeam/architecture/blob/main/docs/guides/git_workflow.md)
-2. Always link PRs to architecture docs
-3. Ensure tests pass before pushing
-4. Update documentation if needed
-
-## License
+1. Workflow веток: ветка → PR в `main`; ссылку на issue в тексте PR (`Closes #N` / `Refs #N`). Подробнее: [.claude/rules/protected-main.md](.claude/rules/protected-main.md).
+2. Спецификация и дорожная карта: репозиторий [architecture](https://github.com/COOKieProjectTeam/architecture) (`docs/`), синхронизация с Vault — см. `docs/SYNC.md`.
 
 Proprietary - COOKie Team
