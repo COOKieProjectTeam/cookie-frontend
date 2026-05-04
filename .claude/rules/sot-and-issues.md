@@ -12,6 +12,8 @@
 
 **Companion:** при вертикали указывать issue в `cookie-backend`.
 
+**Организационная доска:** Projects v2 org **«cookie»** — карточки issue/PR; область задачи задаётся метками **`area:frontend`**, **`area:backend`**, **`area:infra`**, **`area:docs`**. Полный процесс: зеркало [github-project-cookie](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-project-cookie.md).
+
 ## Pull Request
 
 - **`main`** защищён: только ветка + **PR**. См. `.claude/rules/protected-main.md`.

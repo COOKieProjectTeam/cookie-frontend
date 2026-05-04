@@ -14,3 +14,13 @@
 - Спецификация в **vault**; issues — структура из `.github/ISSUE_TEMPLATE/task.yml`.
 - Контракт API: swagger бэкенда; dev — **MSW** на `/api/v1/*` согласно tech-stack.
 - Зеркало/диаграммы: репозиторий [architecture](https://github.com/COOKieProjectTeam/architecture).
+
+### Dev / качество перед PR
+
+- **MSW ↔ реальный API:** в разработке мокируется только префикс **`/api/v1/*`**; при включении живого backend задайте `NEXT_PUBLIC_*`/`NEXT_PUBLIC_API_BASE_URL` в **`.env.local`** (образец — **`.env.example`** в корне репо). После правок конфигурации проверять и мок-сценарии, и хит реального swagger.
+- **Маршруты:** только **Next.js App Router**, страницы и layouts в **`src/app/`**; не смешивать с legacy `pages/` без явной задачи на миграцию.
+- **Проверки локально перед PR:** `npm run lint` → `npm run build` (включает typecheck сборки Next) → `npm test`; при ошибках сборки править перед отправкой ревью.
+
+### Организационная доска
+
+- Единый org Projects **«cookie»**, workflow добавления новых issue: см. [github-project-cookie](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-project-cookie.md).
