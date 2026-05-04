@@ -169,4 +169,6 @@ npm run test:ui
 1. Workflow веток: ветка → PR в `main`; ссылку на issue в тексте PR (`Closes #N` / `Refs #N`). Подробнее: [.claude/rules/protected-main.md](.claude/rules/protected-main.md).
 2. Спецификация и дорожная карта: репозиторий [architecture](https://github.com/COOKieProjectTeam/architecture) (`docs/`), синхронизация с Vault — см. `docs/SYNC.md`.
 
+## License
+
 Proprietary - COOKie Team
