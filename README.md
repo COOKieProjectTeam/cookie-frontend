@@ -160,7 +160,9 @@ npm run test:ui
 
 ## GitHub Projects v2 («cookie»)
 
-Новые **issues** в этом репозитории автоматически попадают в org-проект [cookie (#2)](https://github.com/orgs/COOKieProjectTeam/projects/2). Для успешной работы GitHub Actions задайте в настройках репозитория секрет **`ADD_TO_PROJECT_PAT`** (scopes и проверку — см. [github-project-cookie](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-project-cookie.md)).
+Единый org backlog: https://github.com/orgs/COOKieProjectTeam/projects/2
+
+Авто-добавление **новой issue на доску** включается workflow **Add issue to COOK org project** (файл из раздела «Автоматизация» в [github-project-cookie](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-project-cookie.md)) плюс репозиторный секрет **`ADD_TO_PROJECT_PAT`**. Если токена git для push нет OAuth scope **`workflow`**, см. ту же страницу (раздел про отказ при push или UI-добавление файла).
 
 ## Contributing
 
