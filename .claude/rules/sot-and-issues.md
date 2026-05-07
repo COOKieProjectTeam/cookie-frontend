@@ -2,13 +2,13 @@
 
 ## Канон текста требований
 
-Ведущая копия: **Obsidian** — `Knowledge/Development/Projects/COOKie/`. Детали UI — **FRS** и tech-stack. Не дублировать полные тексты спеки в issues.
+Источник правды: репозиторий [**architecture**](https://github.com/COOKieProjectTeam/architecture) — `docs/requirements/FRS.md`, `docs/technical/tech-stack.md`. Не дублировать полные тексты спеки в issues.
 
 ## Формат issue
 
-Заголовок: `[S1|…] UI: …`. Секции как в vault `process/github-issue-format.md`; форма — `.github/ISSUE_TEMPLATE/task.yml`.
+Заголовок: `[S1|…] UI: …`. Секции как в [`docs/process/github-issue-format.md`](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-issue-format.md); форма — `.github/ISSUE_TEMPLATE/task.yml`.
 
-**Trace:** FR + `Vault:` (путь к заметке, напр. `Knowledge/Development/Projects/COOKie/requirements/FRS.md §…`).
+**Trace:** FR + ссылка на раздел в `architecture/docs/requirements/FRS.md §…`.
 
 **Companion:** при вертикали указывать issue в `cookie-backend`.
 
@@ -21,4 +21,4 @@
 
 ## Стек (сверка)
 
-Канон: **Next.js 14**, **React 18**, **TS 5**, TanStack Query, Zustand, styled-components, RHF + Zod, Axios, MSW — см. `architecture/technical/tech-stack.md` в vault.
+Канон: **Next.js 14**, **React 18**, **TS 5**, TanStack Query, Zustand, styled-components, RHF + Zod, Axios, MSW — см. [`docs/technical/tech-stack.md`](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/technical/tech-stack.md).
