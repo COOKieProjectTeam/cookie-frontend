@@ -2,7 +2,7 @@
 
 ## Канон текста требований
 
-Источник правды: репозиторий [**architecture**](https://github.com/COOKieProjectTeam/architecture) — `docs/requirements/FRS.md`, `docs/technical/tech-stack.md`. Не дублировать полные тексты спеки в issues.
+Источник правды: репозиторий [**architecture**](https://github.com/COOKieProjectTeam/architecture) — `docs/requirements/FRS.md`, `docs/architecture/technical/tech-stack.md`. Не дублировать полные тексты спеки в issues.
 
 ## Формат issue
 
@@ -21,4 +21,4 @@
 
 ## Стек (сверка)
 
-Канон: **Next.js 14**, **React 18**, **TS 5**, TanStack Query, Zustand, styled-components, RHF + Zod, Axios, MSW — см. [`docs/technical/tech-stack.md`](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/technical/tech-stack.md).
+Канон: **Next.js 14**, **React 18**, **TS 5**, TanStack Query, Zustand, styled-components, RHF + Zod, Axios, MSW — см. [`docs/architecture/technical/tech-stack.md`](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/architecture/technical/tech-stack.md).
