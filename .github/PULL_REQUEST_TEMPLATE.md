@@ -12,7 +12,6 @@
 ## Architecture Reference
 <!-- Link to relevant architecture documentation (if applicable) -->
 
-
 ## Type of Change
 <!-- Mark with "x" the relevant option(s) -->
 - [ ] Bug fix (non-breaking change which fixes an issue)
@@ -24,9 +23,9 @@
 
 ## Checklist
 <!-- Mark with "x" all that apply -->
-- [ ] Code follows project style guide
+- [ ] Code follows project style guide (eslint / prettier pass)
 - [ ] Self-review completed
-- [ ] Comments added in hard-to-understand areas
+- [ ] Non-obvious logic has a comment explaining WHY (not what)
 - [ ] Documentation updated (if needed)
 - [ ] No console errors or warnings
 - [ ] Tests pass locally
@@ -36,12 +35,9 @@
 ## Screenshots (if applicable)
 <!-- Add screenshots or screen recordings for UI changes -->
 
-
 ## Related Issues
 <!-- Link related issues using keywords: Closes, Fixes, Resolves, Implements, Related -->
-<!-- Example: Closes #123, Implements COOKAITeam/architecture#FRONT-001 -->
-
+<!-- Example: Closes #123, Refs https://github.com/COOKieProjectTeam/architecture/blob/main/docs/requirements/FRS.md -->
 
 ## Additional Notes
 <!-- Any additional information for reviewers -->
-
