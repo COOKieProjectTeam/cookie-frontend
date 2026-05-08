@@ -1,0 +1,19 @@
+# Glob patterns of files lint-on-save.sh should skip.
+# One pattern per line. Lines starting with # are comments.
+# Patterns are matched against the absolute file path via shell `case`.
+# Use *path-fragment* on both sides to match anywhere in the path.
+
+# Build / dependency output
+*node_modules/*
+*/.next/*
+*/dist/*
+*/build/*
+*/coverage/*
+*/.turbo/*
+
+# Generated / declaration files
+*.d.ts
+*.gen.ts
+*.gen.tsx
+*.generated.ts
+*.generated.tsx

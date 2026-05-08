@@ -15,7 +15,7 @@ paths:
 - **CSS**: styled-components 6 — ThemeProvider at `src/shared/ui/theme/`. All values via theme tokens.
 - **Icons**: Lucide React
 - **Architecture**: FSD-like — `features/` → `entities/` → `shared/` (ui/api/lib/config) → `stores/`. No cross-layer imports in reverse direction.
-- **Rendering**: Next.js 14 App Router — RSC by default, `'use client'` only for browser APIs / hooks / styled-components.
+- **Rendering**: Next.js 14 App Router — RSC by default, `'use client'` only when needed. Full policy in [`rsc-policy.md`](rsc-policy.md).
 
 ## Design Tokens
 
