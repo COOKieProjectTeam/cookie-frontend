@@ -23,7 +23,8 @@
 | Скилл | Что делает |
 |---|---|
 | `/api-client` | Генерит Axios-клиент + Zod-схемы + TanStack Query hooks + MSW handlers под swagger домен |
-| `/test-writer` | Vitest + RTL под изменённые файлы |
+| `/test-writer` | Vitest + RTL под изменённые файлы (UI, утилиты, бизнес-логика) |
+| `/test-writer-api` | Специализированный test-writer для API slices: request fns, hooks, schema drift через MSW |
 | `/tdd` | Red → green → refactor цикл |
 | `/pr-review` | Параллельный прогон reviewer-агентов |
 | `/refactor` | Безопасный рефактор без смены поведения |
@@ -50,7 +51,8 @@
 |---|---|
 | `protected-main.md` | `main` защищён, только PR |
 | `sot-and-issues.md` | SoT — repo `architecture`, формат GitHub issue |
-| `frontend.md` | FSD-слои, App Router, RSC vs client политика, дизайн-токены |
+| `frontend.md` | FSD-слои, App Router, дизайн-токены |
+| `rsc-policy.md` | RSC vs `'use client'` — когда нужен, композиция, провайдеры, антипаттерны |
 | `code-quality.md`, `error-handling.md`, `security.md`, `testing.md` | Поперечные правила |
 
 ### Permissions (`settings.json`, allow без подтверждения)
@@ -106,14 +108,24 @@ src/mocks/handlers/auth.ts  # MSW handlers под те же эндпоинты
 
 ### Шаг 3. Тесты
 
+API slice:
+
+```
+Ты:  /test-writer-api auth
+```
+
+- `auth.ts` — happy path, schema drift (ZodError), 401/422/500, query params
+- `useLogin` / `useRegister` / `useRefresh` — loading→success, error path, invalidation
+- 401 → refresh → retry интеграция (один раз на slice)
+
+UI:
+
 ```
 Ты:  /test-writer
 ```
 
-Покрытие:
 - `LoginForm` — render, submit happy path, validation per field, loading, server error toast
-- `auth.ts` — 200 / 401 / 422 / network error через MSW
-- Hooks — `useLogin` в `renderHook` с `QueryClientProvider` wrapper
+- `RegisterForm` — то же самое
 
 ### Шаг 4. Ревью
 

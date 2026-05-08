@@ -78,10 +78,45 @@ else
   exit 0
 fi
 
-# On failure, surface the lint output to Claude so it can react.
+# On failure, surface only the diagnostics for THIS file.
+# ESLint stylish formatter groups output as:
+#   <abs path>
+#     <line>:<col>  <level>  <message>  <rule>
+#     ...
+#   <next abs path>
+#     ...
+#   <summary lines>
+# We extract just the block whose header matches our file (basename match,
+# tolerating Windows backslash/forward-slash path differences) plus the trailing
+# summary line ("X problems (Y errors, Z warnings)") for context.
 if [ "$LINT_EXIT" -ne 0 ]; then
-  echo "lint-on-save: ESLint reported issues in $FILE_PATH" >&2
-  echo "$LINT_OUTPUT" >&2
+  BASENAME=$(basename "$FILE_PATH")
+  FILTERED=$(printf '%s\n' "$LINT_OUTPUT" | awk -v target="$BASENAME" '
+    BEGIN { in_block = 0 }
+    # Header line: starts at column 0, contains the target basename, no leading space.
+    /^[^[:space:]]/ {
+      if (index($0, target) > 0) {
+        in_block = 1
+        print
+        next
+      } else {
+        in_block = 0
+      }
+    }
+    # Diagnostic lines: indented with leading whitespace.
+    in_block && /^[[:space:]]/ { print; next }
+    # Summary: capture "X problems (...)" line.
+    /^[[:space:]]*✖?[[:space:]]*[0-9]+ problem/ { print }
+  ')
+
+  if [ -n "$FILTERED" ]; then
+    echo "lint-on-save: ESLint reported issues in $FILE_PATH" >&2
+    printf '%s\n' "$FILTERED" >&2
+  else
+    # Fallback: full output if filter pattern misses (e.g. JSON formatter, custom config).
+    echo "lint-on-save: ESLint reported issues in $FILE_PATH (unfiltered)" >&2
+    printf '%s\n' "$LINT_OUTPUT" >&2
+  fi
 fi
 
 exit 0
