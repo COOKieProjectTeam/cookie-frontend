@@ -91,6 +91,12 @@
             "command": "bash .claude/hooks/format-on-save.sh",
             "timeout": 15000,
             "statusMessage": "Formatting..."
+          },
+          {
+            "type": "command",
+            "command": "bash .claude/hooks/lint-on-save.sh",
+            "timeout": 30000,
+            "statusMessage": "Linting..."
           }
         ]
       }

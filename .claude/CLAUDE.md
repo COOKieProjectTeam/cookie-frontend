@@ -16,7 +16,7 @@ npm run format  # prettier --write
 
 1. [.claude/rules/protected-main.md](rules/protected-main.md) — **`main`** защищённая ветка: ветка → push → **PR → `main`**; в PR указать связь с **issue** (`Closes` / `Refs #N`).
 2. [.claude/rules/sot-and-issues.md](rules/sot-and-issues.md) — источники правды и формат задач.
-3. Канон UI и стека: репозиторий [architecture](https://github.com/COOKieProjectTeam/architecture) — `docs/technical/tech-stack.md` и `docs/requirements/FRS.md`.
+3. Канон UI и стека: репозиторий [architecture](https://github.com/COOKieProjectTeam/architecture) — `docs/architecture/technical/tech-stack.md` и `docs/requirements/FRS.md`.
 
 ## Архитектура
 
