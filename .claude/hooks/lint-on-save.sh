@@ -30,13 +30,6 @@ case "$EXTENSION" in
   *) exit 0 ;;
 esac
 
-# Skip files that ESLint should not see.
-case "$FILE_PATH" in
-  *node_modules/*|*.next/*|*dist/*|*build/*|*coverage/*) exit 0 ;;
-  *.d.ts) exit 0 ;;
-  *.gen.ts|*.generated.ts|*.gen.tsx|*.generated.tsx) exit 0 ;;
-esac
-
 find_project_root() {
   local dir="$PWD"
   while [ "$dir" != "/" ]; do
@@ -50,6 +43,24 @@ find_project_root() {
 }
 
 ROOT=$(find_project_root)
+
+# Skip files matched by .claude/hooks/lint-skip.txt (one glob pattern per line, # for comments).
+SKIP_FILE="$ROOT/.claude/hooks/lint-skip.txt"
+if [ -f "$SKIP_FILE" ]; then
+  while IFS= read -r pattern || [ -n "$pattern" ]; do
+    case "$pattern" in
+      ''|\#*) continue ;;
+    esac
+    # Trim trailing whitespace / CR (handle CRLF line endings on Windows).
+    pattern="${pattern%$'\r'}"
+    pattern="${pattern%"${pattern##*[![:space:]]}"}"
+    [ -z "$pattern" ] && continue
+    # Unquoted $pattern so glob metacharacters expand as a pattern, not a literal.
+    case "$FILE_PATH" in
+      $pattern) exit 0 ;;
+    esac
+  done < "$SKIP_FILE"
+fi
 
 # Require an ESLint config to run anything.
 HAS_ESLINT_CONFIG=false
