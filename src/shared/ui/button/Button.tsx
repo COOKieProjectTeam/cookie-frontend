@@ -116,7 +116,7 @@ const StyledButton = styled.button<{
     outline-offset: 2px;
   }
 
-  &:disabled {
+  &:disabled:not([data-loading='true']) {
     cursor: not-allowed;
     opacity: 0.5;
   }
@@ -165,7 +165,7 @@ export const Button = forwardRef<HTMLButtonElement, ButtonProps>(function Button
     <StyledButton
       ref={ref}
       type={type}
-      disabled={disabled}
+      disabled={disabled || loading}
       aria-busy={loading ? true : undefined}
       data-loading={loading ? 'true' : undefined}
       onClick={loading ? undefined : onClick}

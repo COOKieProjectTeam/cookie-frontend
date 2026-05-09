@@ -44,11 +44,6 @@ export const GlobalStyle = createGlobalStyle`
     isolation: isolate;
   }
 
-  :focus-visible {
-    outline: none;
-    box-shadow: ${({ theme }) => theme.shadows.focusRing};
-  }
-
   :focus:not(:focus-visible) {
     outline: none;
   }
