@@ -4,25 +4,27 @@ Next.js 14 frontend application for COOKie recipe platform.
 
 ## Tech Stack
 
-- **Framework**: Next.js 14 (App Router)
+- **Framework**: Next.js 14 (App Router, RSC by default)
 - **Language**: TypeScript 5.x (strict mode)
 - **State Management**:
   - Zustand (global client state)
   - TanStack Query v5 (server state)
-- **Styling**: TailwindCSS + Custom Components
+- **Styling**: styled-components 6 + ThemeProvider (design tokens, light/dark)
 - **Forms**: React Hook Form + Zod
-- **Auth**: NextAuth.js v5
+- **Auth**: Axios interceptors — access token in-memory + HttpOnly refresh cookie
 - **HTTP Client**: Axios
+- **API Mocking**: MSW v2 (intercepts `/api/v1/*` in dev)
 - **Icons**: Lucide React
 - **Testing**: Vitest + React Testing Library
 - **Date Utils**: date-fns
-- **UI Primitives**: Headless UI (for complex components)
+- **Linting / Format**: ESLint (`next/core-web-vitals`) + Prettier
+- **Pre-commit**: husky + lint-staged
 
 ## Prerequisites
 
 - Node.js 20.x LTS
 - npm 10.x or higher
-- Access to backend API (ASP.NET Core 8)
+- Backend API (ASP.NET Core 8) **or** MSW mocks enabled in dev
 
 ## Setup
 
@@ -39,9 +41,12 @@ cp .env.example .env.local
 ```
 
 Edit `.env.local` with your actual values:
-- `NEXT_PUBLIC_API_BASE_URL` - Backend API URL
-- `NEXTAUTH_SECRET` - Generate with: `openssl rand -base64 32`
-- OAuth credentials (Yandex, VK)
+
+| Variable | Purpose | Example |
+| --- | --- | --- |
+| `NEXT_PUBLIC_API_BASE_URL` | Backend API URL | `http://localhost:5000` |
+| `NEXT_PUBLIC_API_TIMEOUT` | Axios timeout (ms) | `10000` |
+| `NEXT_PUBLIC_USE_MSW` | Enable API mocks in dev | `true` / `false` |
 
 ### 3. Run development server
 
@@ -55,10 +60,11 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 
 - `npm run dev` - Start development server
 - `npm run build` - Build for production
-- `npm run start` - Start production server
+- `npm start` - Start production server
 - `npm run lint` - Run ESLint
-- `npm run test` - Run tests with Vitest
-- `npm run test:ui` - Run tests with UI
+- `npm run test` - Run tests with Vitest (watch mode)
+- `npm run test -- --run` - Single test run (CI)
+- `npm run test:ui` - Run tests with UI inspector
 - `npm run format` - Format code with Prettier
 
 ## Project Structure
@@ -67,107 +73,62 @@ Open [http://localhost:3000](http://localhost:3000) in your browser.
 src/
 ├── app/                    # Next.js 14 App Router
 │   ├── (auth)/            # Auth pages (login, register)
-│   ├── (main)/            # Main app (recipes, profile)
-│   ├── admin/             # Admin panel
-│   └── api/               # API routes (NextAuth)
-├── components/
-│   ├── ui/                # Base UI components
-│   ├── recipes/           # Recipe-specific components
-│   ├── layout/            # Layout components
-│   ├── forms/             # Form components
-│   └── common/            # Shared components
-├── hooks/
-│   └── api/               # TanStack Query hooks
-├── lib/
-│   ├── api/               # API client & services
-│   ├── utils.ts           # Utility functions
-│   └── queryClient.ts     # TanStack Query config
+│   ├── (main)/            # Main app (recipes, profile, favorites)
+│   └── admin/             # Admin panel
+├── features/              # Business features (auth, recipe-search, meal-plan, …)
+├── entities/              # Domain entities: Recipe, User, MealPlan — models + API + UI cards
+├── shared/
+│   ├── api/               # Axios client, QueryProvider
+│   ├── ui/                # Base UI primitives (Button, Input, …) + theme/tokens
+│   ├── lib/               # Utilities, hooks
+│   └── config/            # Environment constants
 ├── stores/                # Zustand stores
-├── schemas/               # Zod validation schemas
-├── types/                 # TypeScript types
-└── tests/                 # Test setup & mocks
+└── tests/                 # Global test setup, MSW handlers
 ```
+
+FSD layer rule: imports go down only (`features` → `entities` → `shared`).
 
 ## Architecture Documentation
 
 For detailed architecture and technical specifications, see:
 
-- [Frontend Stack](https://github.com/COOKAITeam/architecture/blob/main/docs/technical/FRONTEND_STACK.md)
-- [Folder Structure](https://github.com/COOKAITeam/architecture/blob/main/docs/technical/FRONTEND_FOLDER_STRUCTURE.md)
-- [Project Backlog](https://github.com/COOKAITeam/architecture/blob/main/docs/planning/PROJECT_BACKLOG.md)
-- [Multi-Repo Workflow](https://github.com/COOKAITeam/architecture/blob/main/docs/guides/MULTI_REPO_WORKFLOW.md)
-- [Git Workflow](https://github.com/COOKAITeam/architecture/blob/main/docs/guides/git_workflow.md)
+- [Tech Stack](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/architecture/technical/tech-stack.md)
+- [FRS](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/requirements/FRS.md)
+- [GitHub Project Process](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-project-cookie.md)
 
 ## Related Repositories
 
-- [Architecture](https://github.com/COOKAITeam/architecture) - Documentation & specs
-- [Backend](https://github.com/COOKAITeam/cookie-backend) - ASP.NET Core 8 API
-
-## Development Workflow
-
-### Creating Features
-
-1. Check backlog in architecture repo for task details
-2. Create issue in this repo linking to architecture backlog
-3. Create feature branch: `git checkout -b feature/recipe-cards`
-4. Implement feature following architecture specs
-5. Create PR with reference to architecture docs
-6. Update architecture docs if design changes
-
-### Commit Message Format
-
-```
-<type>(<scope>): <subject>
-
-<body>
-
-Implements COOKAITeam/architecture#FRONT-XXX
-Closes #YY
-```
-
-Types: `feat`, `fix`, `docs`, `style`, `refactor`, `test`, `chore`
+- [Architecture](https://github.com/COOKieProjectTeam/architecture) - Documentation & specs
+- [Backend](https://github.com/COOKieProjectTeam/cookie-backend) - ASP.NET Core 8 API
 
 ## Docker Development
 
 ```bash
 # Build and run with Docker Compose
-docker-compose up
+docker compose up
 
 # Rebuild after dependency changes
-docker-compose up --build
+docker compose up --build
 ```
 
 ## Testing
 
 ```bash
-# Run all tests
+# Run all tests in watch mode
 npm test
 
-# Run tests in watch mode
-npm test -- --watch
+# Single run (CI)
+npm test -- --run
 
-# Run tests with UI
+# Run tests with UI inspector
 npm run test:ui
 ```
-
-## Code Style
-
-- Use functional components with TypeScript
-- Follow ESLint and Prettier configurations
-- Use absolute imports with `@/` alias
-- Keep components small and focused
-- Co-locate tests with components
 
 ## GitHub Projects v2 («cookie»)
 
 Единый org backlog: https://github.com/orgs/COOKieProjectTeam/projects/2
 
-Авто-добавление **новой issue на доску** включается workflow **Add issue to COOK org project** (файл из раздела «Автоматизация» в [github-project-cookie](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-project-cookie.md)) плюс репозиторный секрет **`ADD_TO_PROJECT_PAT`**. Если токена git для push нет OAuth scope **`workflow`**, см. ту же страницу (раздел про отказ при push или UI-добавление файла).
-
-## Contributing
-
-1. Workflow веток: ветка → PR в `main`; ссылку на issue в тексте PR (`Closes #N` / `Refs #N`). Подробнее: [.claude/rules/protected-main.md](.claude/rules/protected-main.md).
-2. Спецификация и дорожная карта: репозиторий [architecture](https://github.com/COOKieProjectTeam/architecture) (`docs/`), синхронизация с Vault — см. `docs/SYNC.md`.
+Авто-добавление новой issue на доску включается workflow **Add issue to COOK org project** (файл из раздела «Автоматизация» в [github-project-cookie](https://github.com/COOKieProjectTeam/architecture/blob/main/docs/process/github-project-cookie.md)) плюс репозиторный секрет **`ADD_TO_PROJECT_PAT`**.
 
 ## License
 
