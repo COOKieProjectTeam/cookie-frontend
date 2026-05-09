@@ -13,11 +13,11 @@ export const GlobalStyle = createGlobalStyle`
   }
 
   body {
-    font-family: ${({ theme }) => theme.typography.fontFamily};
-    font-size: ${({ theme }) => theme.typography.fontSize.md};
-    line-height: ${({ theme }) => theme.typography.lineHeight.normal};
-    color: ${({ theme }) => theme.colors.neutral[900]};
-    background-color: ${({ theme }) => theme.colors.neutral[50]};
+    font-family: ${({ theme }) => theme.typography.fontFamily.body};
+    font-size: ${({ theme }) => theme.typography.type.body.size};
+    line-height: ${({ theme }) => theme.typography.type.body.line};
+    color: ${({ theme }) => theme.colors.text.primary};
+    background-color: ${({ theme }) => theme.colors.bg.page};
     -webkit-font-smoothing: antialiased;
     -moz-osx-font-smoothing: grayscale;
   }
@@ -42,5 +42,24 @@ export const GlobalStyle = createGlobalStyle`
 
   #root, #__next {
     isolation: isolate;
+  }
+
+  :focus-visible {
+    outline: none;
+    box-shadow: ${({ theme }) => theme.shadows.focusRing};
+    border-radius: ${({ theme }) => theme.radii.sm};
+  }
+
+  :focus:not(:focus-visible) {
+    outline: none;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after {
+      animation-duration: 0.01ms !important;
+      animation-iteration-count: 1 !important;
+      transition-duration: 0.01ms !important;
+      scroll-behavior: auto !important;
+    }
   }
 `

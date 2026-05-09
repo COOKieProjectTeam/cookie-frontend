@@ -1,4 +1,5 @@
 import type { Metadata } from 'next'
+import '@/shared/ui/theme/tokens.css'
 import { StyledComponentsRegistry } from '@/shared/ui/theme/StyledComponentsRegistry'
 import { AppThemeProvider } from '@/shared/ui/theme/AppThemeProvider'
 import { QueryProvider } from '@/shared/api/QueryProvider'
