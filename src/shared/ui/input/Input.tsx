@@ -104,7 +104,6 @@ const Field = styled.div<{ $size: InputSize; $disabled: boolean }>`
     css`
       cursor: not-allowed;
       opacity: 0.5;
-      pointer-events: none;
     `}
 `
 

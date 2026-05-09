@@ -4,8 +4,6 @@
    Single source of truth. No component styles below this file.
    ========================================================================= */
 
-@import url('https://fonts.googleapis.com/css2?family=Bricolage+Grotesque:opsz,wght@12..96,200..800&display=swap');
-
 /* =========================================================================
    :ROOT — LIGHT THEME (default)
    ========================================================================= */
@@ -158,9 +156,9 @@
   --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* bouncy entrance */
 
   /* ---------- TYPOGRAPHY · FAMILIES ---------- */
-  --font-display: 'Bricolage Grotesque', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
     sans-serif;
-  --font-body: 'Bricolage Grotesque', ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+  --font-body: var(--font-bricolage), ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
     sans-serif;
   --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
     monospace;
@@ -319,13 +317,6 @@
   --shadow-focus-ring: 0 0 0 3px rgba(199, 139, 200, 0.36);
 }
 
-/* =========================================================================
-   System dark — auto-apply if user has not set [data-theme]
-   ========================================================================= */
-@media (prefers-color-scheme: dark) {
-  :root:not([data-theme='light']) {
-    color-scheme: dark;
-    /* Mirror the dark block above without duplicating: documented in repo;
-       teams that want strict opt-in should remove this @media block. */
-  }
-}
+/* Dark mode is opt-in: set data-theme="dark" on <html> to activate.
+   OS prefers-color-scheme is not auto-applied; use a JS hook to read
+   navigator.userAgent and set the attribute before first paint if needed. */

@@ -47,7 +47,6 @@ export const GlobalStyle = createGlobalStyle`
   :focus-visible {
     outline: none;
     box-shadow: ${({ theme }) => theme.shadows.focusRing};
-    border-radius: ${({ theme }) => theme.radii.sm};
   }
 
   :focus:not(:focus-visible) {
