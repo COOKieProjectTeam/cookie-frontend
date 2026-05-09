@@ -15,15 +15,25 @@ emit_deny() {
   exit 2
 }
 
-if ! command -v jq >/dev/null 2>&1; then
-  emit_deny "jq is required for command protection hooks but is not installed."
-fi
-
 INPUT=$(cat)
-COMMAND=$(printf '%s' "$INPUT" | jq -r '.tool_input.command // empty' 2>/dev/null || true)
+_PY=""
+_pycand=$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)
+if [ -n "$_pycand" ] && printf '' | "$_pycand" -c "pass" >/dev/null 2>&1; then
+  _PY="$_pycand"
+fi
+if [ -n "$_PY" ]; then
+  COMMAND=$(printf '%s' "$INPUT" | "$_PY" -c \
+    "import sys,json; d=json.load(sys.stdin); print(d.get('tool_input',{}).get('command',''))" \
+    2>/dev/null || true)
+else
+  COMMAND=$(printf '%s' "$INPUT" \
+    | grep -o '"command"[[:space:]]*:[[:space:]]*"[^"]*"' \
+    | sed 's/.*"command"[[:space:]]*:[[:space:]]*"\([^"]*\)"/\1/' \
+    | head -1 || true)
+fi
 [ -z "$COMMAND" ] && exit 0
 
-# ── Protected branch list ────────────────────────────────────────────────
+# в”Ђв”Ђ Protected branch list в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 DEFAULT_BRANCHES="main,master"
 if GIT_DEFAULT=$(git config --get init.defaultBranch 2>/dev/null) && [ -n "$GIT_DEFAULT" ]; then
   DEFAULT_BRANCHES="$DEFAULT_BRANCHES,$GIT_DEFAULT"
@@ -35,7 +45,7 @@ BR_REGEX=$(printf '%s' "$PROTECTED_BRANCHES" | tr ',' '\n' | awk 'NF{printf "%s%
 contains_cmd() { printf '%s' "$COMMAND" | grep -qE "$1"; }
 contains_icmd() { printf '%s' "$COMMAND" | grep -qiE "$1"; }
 
-# ── Git push protections ────────────────────────────────────────────────
+# в”Ђв”Ђ Git push protections в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 if contains_cmd '(^|[;&|()]+[[:space:]]*)git[[:space:]]+push'; then
   # Explicit refspec to a protected branch (origin main, :main, HEAD:main, remote branch)
   if contains_cmd "git[[:space:]]+push[[:space:]]+[^[:space:]]+[[:space:]]+([^[:space:]]*:)?($BR_REGEX)(\$|[[:space:]])"; then
@@ -60,7 +70,7 @@ if contains_cmd '(^|[;&|()]+[[:space:]]*)git[[:space:]]+push'; then
   fi
 fi
 
-# ── Destructive filesystem operations ───────────────────────────────────
+# в”Ђв”Ђ Destructive filesystem operations в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 # rm -rf targeting root, home, $HOME, $VAR (any unresolved expansion), or parent traversal.
 # We normalise quotes before matching so "my folder", '$HOME/trash', etc. Are all inspected.
 CMD_NOQUOTE=$(printf '%s' "$COMMAND" | tr -d "'\"")
@@ -72,7 +82,7 @@ if printf '%s' "$CMD_NOQUOTE" | grep -qE 'rm[[:space:]]+(-[a-zA-Z]+[[:space:]]+)
   emit_deny "Blocked: recursive delete targeting a system directory."
 fi
 
-# ── Dangerous database operations ───────────────────────────────────────
+# в”Ђв”Ђ Dangerous database operations в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 # DROP TABLE|DATABASE|SCHEMA
 if contains_icmd 'DROP[[:space:]]+(TABLE|DATABASE|SCHEMA)[[:space:]]+'; then
   emit_deny "Blocked: DROP TABLE/DATABASE/SCHEMA detected. Run manually if intended."
@@ -91,7 +101,7 @@ if contains_icmd 'TRUNCATE[[:space:]]+TABLE'; then
   emit_deny "Blocked: TRUNCATE TABLE detected. Run manually if intended."
 fi
 
-# ── Dangerous system commands ───────────────────────────────────────────
+# в”Ђв”Ђ Dangerous system commands в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 # chmod: any world-writable/universal mode (0?777 or a+rwx)
 if contains_cmd 'chmod([[:space:]]+-[a-zA-Z]+)*[[:space:]]+0?777([[:space:]]|$)' \
   || contains_cmd 'chmod([[:space:]]+-[a-zA-Z]+)*[[:space:]]+a\+rwx([[:space:]]|$)'; then
@@ -115,7 +125,7 @@ if contains_cmd '(^|[;&|[:space:]])(mkfs|mkfs\.[a-z0-9]+)([[:space:]]|$)' \
   emit_deny "Blocked: mkfs/dd against a device node. Irreversible data loss."
 fi
 
-# ── Destructive git ─────────────────────────────────────────────────────
+# в”Ђв”Ђ Destructive git в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 if contains_cmd 'git[[:space:]]+reset[[:space:]]+--hard'; then
   emit_deny "Blocked: git reset --hard discards uncommitted changes permanently."
 fi
@@ -123,7 +133,7 @@ if contains_cmd 'git[[:space:]]+clean[[:space:]]+-[a-zA-Z]*f'; then
   emit_deny "Blocked: git clean -f permanently deletes untracked files."
 fi
 
-# ── Accidental package publishing ───────────────────────────────────────
+# в”Ђв”Ђ Accidental package publishing в”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђв”Ђ
 # Allow --dry-run variants (npm publish --dry-run is safe and common in CI).
 publish_patterns=(
   '(npm|yarn|pnpm|bun)[[:space:]]+publish'
