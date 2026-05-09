@@ -1,0 +1,322 @@
+/* =========================================================================
+   COOKie — Design Tokens
+   Desktop-first web app: meal planning · recipes · KBJU · shopping list
+   Single source of truth. No component styles below this file.
+   ========================================================================= */
+
+/* =========================================================================
+   :ROOT — LIGHT THEME (default)
+   ========================================================================= */
+:root {
+  color-scheme: light;
+
+  /* ---------- COLORS · PRIMARY RAMP (warm plum, 500 = #965E97) ---------- */
+  --color-primary-50: #fbf6fb;
+  --color-primary-100: #f4e8f5;
+  --color-primary-200: #e6cfe7;
+  --color-primary-300: #d2aed3;
+  --color-primary-400: #b884b9;
+  --color-primary-500: #965e97; /* supplied */
+  --color-primary-600: #7e4c7f;
+  --color-primary-700: #653c66;
+  --color-primary-800: #4c2d4d;
+  --color-primary-900: #2f1c2f;
+
+  /* ---------- COLORS · NEUTRAL RAMP (warm sage-tinted, not gray) ---------- */
+  --color-neutral-50: #f6faf8;
+  --color-neutral-100: #f0f7f4; /* = bg-base */
+  --color-neutral-200: #e3ece8; /* = bg-secondary */
+  --color-neutral-300: #c7d4cf; /* = supplied border */
+  --color-neutral-400: #a2b2ac;
+  --color-neutral-500: #7a8a85;
+  --color-neutral-600: #5c6a65;
+  --color-neutral-700: #474747; /* = supplied text-default */
+  --color-neutral-800: #2b2e2d;
+  --color-neutral-900: #131614;
+
+  /* ---------- COLORS · SEMANTIC ---------- */
+  /* success — derived from supplied #7CB2B6 (cool teal) */
+  --color-success-50: #f1f8f8;
+  --color-success-bg: #e6f1f1;
+  --color-success-border: #b6d5d7;
+  --color-success-fg: #4f8c90; /* AA on white */
+  --color-success: #7cb2b6;
+  --color-success-fg-on: #ffffff;
+
+  /* warning — warm amber, sized to harmonize with primary */
+  --color-warning-50: #fcf7ee;
+  --color-warning-bg: #f8edd3;
+  --color-warning-border: #e8c883;
+  --color-warning-fg: #8a5a0f;
+  --color-warning: #c98914;
+  --color-warning-fg-on: #ffffff;
+
+  /* error — supplied #B81500 */
+  --color-error-50: #fcf1ee;
+  --color-error-bg: #fadcd5;
+  --color-error-border: #eca496;
+  --color-error-fg: #b81500;
+  --color-error: #b81500;
+  --color-error-fg-on: #ffffff;
+
+  /* info — leans toward primary so brand stays cohesive */
+  --color-info-50: #f2f3fa;
+  --color-info-bg: #e3e6f4;
+  --color-info-border: #a8b0da;
+  --color-info-fg: #3f4a8c;
+  --color-info: #5a68b2;
+  --color-info-fg-on: #ffffff;
+
+  /* ---------- COLORS · SURFACE ---------- */
+  --color-bg-page: #f0f7f4;
+  --color-bg-card: #ffffff;
+  --color-bg-elevated: #ffffff; /* same as card in light, lifted by shadow */
+  --color-bg-overlay: rgba(19, 22, 20, 0.42); /* modal scrim */
+  --color-bg-inverse: #131614;
+  --color-bg-secondary: #e3ece8;
+
+  /* ---------- COLORS · TEXT ---------- */
+  --color-text-primary: #1a1c1b;
+  --color-text-secondary: #474747;
+  --color-text-muted: #6b7975;
+  --color-text-disabled: #a2b2ac;
+  --color-text-inverse: #f3f5f4;
+  --color-text-strong: #000000; /* sparingly, max-contrast only */
+  --color-text-link: #7e4c7f; /* primary-600 for AA on bg */
+  --color-text-link-hover: #653c66; /* primary-700 */
+
+  /* ---------- COLORS · BORDER ---------- */
+  --color-border-subtle: #e3ece8;
+  --color-border-default: #c7d4cf;
+  --color-border-strong: #a2b2ac;
+  --color-border-focus: #965e97;
+
+  /* ---------- SPACING (px scale) ---------- */
+  --space-0: 0px;
+  --space-1: 4px;
+  --space-2: 8px;
+  --space-3: 12px;
+  --space-4: 16px;
+  --space-5: 20px;
+  --space-6: 24px;
+  --space-8: 32px;
+  --space-10: 40px;
+  --space-12: 48px;
+  --space-16: 64px;
+  --space-20: 80px;
+  --space-24: 96px;
+  --space-32: 128px;
+
+  /* ---------- RADII ---------- */
+  --radius-sm: 6px;
+  --radius-md: 10px;
+  --radius-lg: 14px;
+  --radius-xl: 20px;
+  --radius-2xl: 28px;
+  --radius-full: 9999px;
+
+  /* ---------- SHADOWS (light: tinted with neutral, NEVER pure black) ---------- */
+  --shadow-elevation-1: 0 1px 2px rgba(45, 60, 55, 0.06), 0 1px 1px rgba(45, 60, 55, 0.04);
+  --shadow-elevation-2: 0 2px 4px rgba(45, 60, 55, 0.06), 0 4px 12px rgba(45, 60, 55, 0.08);
+  --shadow-elevation-3: 0 8px 18px rgba(45, 60, 55, 0.08), 0 14px 32px rgba(45, 60, 55, 0.1);
+  --shadow-elevation-4: 0 18px 32px rgba(45, 60, 55, 0.1), 0 32px 64px rgba(45, 60, 55, 0.14),
+    0 0 0 1px rgba(150, 94, 151, 0.04);
+
+  /* Focus ring — primary-tinted, separate token */
+  --shadow-focus-ring: 0 0 0 3px rgba(150, 94, 151, 0.28);
+
+  /* ---------- Z-INDEX ---------- */
+  --z-dropdown: 1000;
+  --z-sticky: 1100;
+  --z-fixed: 1200;
+  --z-modal-backdrop: 1300;
+  --z-modal: 1400;
+  --z-popover: 1500;
+  --z-toast: 1600;
+  --z-tooltip: 1700;
+
+  /* ---------- BREAKPOINTS (consumable via media queries; vars for JS) ---------- */
+  --bp-sm: 640px;
+  --bp-md: 768px;
+  --bp-lg: 1024px;
+  --bp-xl: 1280px;
+  --bp-2xl: 1536px;
+
+  /* ---------- MOTION · DURATIONS ---------- */
+  --duration-instant: 80ms;
+  --duration-fast: 140ms;
+  --duration-base: 220ms;
+  --duration-slow: 320ms;
+  --duration-slower: 480ms;
+
+  /* ---------- MOTION · EASINGS ---------- */
+  --ease-out: cubic-bezier(0.16, 1, 0.3, 1); /* enter */
+  --ease-in: cubic-bezier(0.7, 0, 0.84, 0); /* exit */
+  --ease-in-out: cubic-bezier(0.65, 0, 0.35, 1); /* transition */
+  --ease-spring: cubic-bezier(0.34, 1.56, 0.64, 1); /* bouncy entrance */
+
+  /* ---------- TYPOGRAPHY · FAMILIES ---------- */
+  --font-display: var(--font-bricolage), ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+  --font-body: var(--font-bricolage), ui-sans-serif, system-ui, -apple-system, 'Segoe UI',
+    sans-serif;
+  --font-mono: ui-monospace, SFMono-Regular, 'SF Mono', Menlo, Consolas, 'Liberation Mono',
+    monospace;
+
+  /* ---------- TYPOGRAPHY · SCALE ---------- */
+  /* caption */
+  --type-caption-size: 0.75rem; /* 12 */
+  --type-caption-line: 1.4;
+  --type-caption-tracking: 0.01em;
+  --type-caption-weight: 500;
+
+  /* small */
+  --type-small-size: 0.8125rem; /* 13 */
+  --type-small-line: 1.5;
+  --type-small-tracking: 0;
+  --type-small-weight: 400;
+
+  /* body */
+  --type-body-size: 0.9375rem; /* 15 */
+  --type-body-line: 1.6;
+  --type-body-tracking: 0;
+  --type-body-weight: 400;
+
+  /* body-lg */
+  --type-body-lg-size: 1.0625rem; /* 17 */
+  --type-body-lg-line: 1.6;
+  --type-body-lg-tracking: -0.005em;
+  --type-body-lg-weight: 400;
+
+  /* h4 */
+  --type-h4-size: 1.25rem; /* 20 */
+  --type-h4-line: 1.4;
+  --type-h4-tracking: -0.01em;
+  --type-h4-weight: 600;
+
+  /* h3 */
+  --type-h3-size: 1.5rem; /* 24 */
+  --type-h3-line: 1.3;
+  --type-h3-tracking: -0.015em;
+  --type-h3-weight: 600;
+
+  /* h2 */
+  --type-h2-size: 2rem; /* 32 */
+  --type-h2-line: 1.2;
+  --type-h2-tracking: -0.02em;
+  --type-h2-weight: 700;
+
+  /* h1 */
+  --type-h1-size: 2.75rem; /* 44 */
+  --type-h1-line: 1.1;
+  --type-h1-tracking: -0.025em;
+  --type-h1-weight: 700;
+
+  /* display */
+  --type-display-size: 4rem; /* 64 */
+  --type-display-line: 1;
+  --type-display-tracking: -0.03em;
+  --type-display-weight: 700;
+
+  /* numeric helper — apply to KBJU readouts */
+  --font-feature-numeric: 'tnum' 1, 'lnum' 1;
+}
+
+/* =========================================================================
+   :ROOT[data-theme="dark"] — overrides only
+   Background gets warmer-cooler shifts, shadows become inverted glow.
+   ========================================================================= */
+:root[data-theme='dark'] {
+  color-scheme: dark;
+
+  /* ---------- PRIMARY RAMP — re-pivot 500 to supplied #C78BC8 ---------- */
+  --color-primary-50: #1b121c;
+  --color-primary-100: #2a1d2b;
+  --color-primary-200: #3d2c3f;
+  --color-primary-300: #573f58;
+  --color-primary-400: #7a5a7b;
+  --color-primary-500: #c78bc8; /* supplied dark primary */
+  --color-primary-600: #d4a2d5;
+  --color-primary-700: #e2bae3;
+  --color-primary-800: #efd2ef;
+  --color-primary-900: #faebfa;
+
+  /* ---------- NEUTRAL RAMP — inverted, warm-cool charcoal ---------- */
+  --color-neutral-50: #0e0e0e;
+  --color-neutral-100: #171717;
+  --color-neutral-200: #1f1f1f;
+  --color-neutral-300: #2b2b2b;
+  --color-neutral-400: #3d3d3d;
+  --color-neutral-500: #6b6b6b;
+  --color-neutral-600: #9a9a9a;
+  --color-neutral-700: #d3d9d6;
+  --color-neutral-800: #e8ecea;
+  --color-neutral-900: #f3f5f4;
+
+  /* ---------- SEMANTIC ---------- */
+  --color-success-50: #122322;
+  --color-success-bg: #1a2e2d;
+  --color-success-border: #3d5e5e;
+  --color-success-fg: #9dd3d6;
+  --color-success: #9dd3d6;
+  --color-success-fg-on: #0e0e0e;
+
+  --color-warning-50: #261a0a;
+  --color-warning-bg: #3a2812;
+  --color-warning-border: #6e5021;
+  --color-warning-fg: #f5c265;
+  --color-warning: #e5a93d;
+  --color-warning-fg-on: #0e0e0e;
+
+  --color-error-50: #2a1410;
+  --color-error-bg: #3e1b16;
+  --color-error-border: #7a352a;
+  --color-error-fg: #ff6a57;
+  --color-error: #ff6a57;
+  --color-error-fg-on: #0e0e0e;
+
+  --color-info-50: #14172a;
+  --color-info-bg: #1e2240;
+  --color-info-border: #3f4a8c;
+  --color-info-fg: #a8b0da;
+  --color-info: #8c95d0;
+  --color-info-fg-on: #0e0e0e;
+
+  /* ---------- SURFACE ---------- */
+  --color-bg-page: #0e0e0e;
+  --color-bg-card: #171717;
+  --color-bg-elevated: #1f1f1f;
+  --color-bg-overlay: rgba(0, 0, 0, 0.62);
+  --color-bg-inverse: #f3f5f4;
+  --color-bg-secondary: #1f1f1f;
+
+  /* ---------- TEXT ---------- */
+  --color-text-primary: #f3f5f4;
+  --color-text-secondary: #d3d9d6;
+  --color-text-muted: #9a9a9a;
+  --color-text-disabled: #5a5a5a;
+  --color-text-inverse: #0e0e0e;
+  --color-text-strong: #ffffff;
+  --color-text-link: #d4a2d5;
+  --color-text-link-hover: #e2bae3;
+
+  /* ---------- BORDER ---------- */
+  --color-border-subtle: #1f1f1f;
+  --color-border-default: #2b2b2b;
+  --color-border-strong: #3d3d3d;
+  --color-border-focus: #c78bc8;
+
+  /* ---------- SHADOWS — inverted glow, primary-tinted ---------- */
+  --shadow-elevation-1: 0 1px 2px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.02);
+  --shadow-elevation-2: 0 4px 12px rgba(0, 0, 0, 0.55), inset 0 1px 0 rgba(255, 255, 255, 0.03);
+  --shadow-elevation-3: 0 12px 28px rgba(0, 0, 0, 0.65), 0 0 0 1px rgba(199, 139, 200, 0.06),
+    inset 0 1px 0 rgba(255, 255, 255, 0.04);
+  --shadow-elevation-4: 0 24px 56px rgba(0, 0, 0, 0.72), 0 0 48px rgba(199, 139, 200, 0.08),
+    0 0 0 1px rgba(199, 139, 200, 0.1), inset 0 1px 0 rgba(255, 255, 255, 0.05);
+
+  --shadow-focus-ring: 0 0 0 3px rgba(199, 139, 200, 0.36);
+}
+
+/* Dark mode is opt-in: set data-theme="dark" on <html> to activate.
+   OS prefers-color-scheme is not auto-applied; use a JS hook to read
+   navigator.userAgent and set the attribute before first paint if needed. */

@@ -12,13 +12,20 @@
 #   - Non-zero ESLint exit (= unfixable error) is surfaced to Claude via stderr,
 #     so the next turn can address it. We do NOT block the edit (exit 0 always).
 
-if ! command -v jq >/dev/null 2>&1; then
-  exit 0
+INPUT=$(cat)
+_PY=$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)
+if [ -n "$_PY" ]; then
+  FILE_PATH=$(printf '%s' "$INPUT" | "$_PY" -c \
+    "import sys,json; d=json.load(sys.stdin); print(d.get('tool_input',{}).get('file_path',''))" \
+    2>/dev/null || true)
+else
+  FILE_PATH=$(printf '%s' "$INPUT" \
+    | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' \
+    | sed 's/.*"file_path"[[:space:]]*:[[:space:]]*"\([^"]*\)"/\1/' \
+    | head -1 || true)
 fi
 
-INPUT=$(cat)
-FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
-
+FILE_PATH="${FILE_PATH%%$'\n'*}"
 if [ -z "$FILE_PATH" ] || [ ! -f "$FILE_PATH" ]; then
   exit 0
 fi

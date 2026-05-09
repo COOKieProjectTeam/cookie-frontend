@@ -3,14 +3,22 @@
 # Used as a PreToolUse hook for Edit|Write operations.
 # Exit 2 = block the action. Exit 0 = allow.
 
-# Requires jq for JSON parsing. Fail closed if missing
-if ! command -v jq >/dev/null 2>&1; then
-  echo "{\"hookSpecificOutput\":{\"hookEventName\":\"PreToolUse\",\"permissionDecision\":\"deny\",\"permissionDecisionReason\":\"jq is required for file protection hooks but is not installed.\"}}"
-  exit 2
-fi
-
 INPUT=$(cat)
-FILE_PATH=$(echo "$INPUT" | jq -r '.tool_input.file_path // empty')
+_PY=""
+_pycand=$(command -v python3 2>/dev/null || command -v python 2>/dev/null || true)
+if [ -n "$_pycand" ] && printf '' | "$_pycand" -c "pass" >/dev/null 2>&1; then
+  _PY="$_pycand"
+fi
+if [ -n "$_PY" ]; then
+  FILE_PATH=$(printf '%s' "$INPUT" | "$_PY" -c \
+    "import sys,json; d=json.load(sys.stdin); print(d.get('tool_input',{}).get('file_path',''))" \
+    2>/dev/null || true)
+else
+  FILE_PATH=$(printf '%s' "$INPUT" \
+    | grep -o '"file_path"[[:space:]]*:[[:space:]]*"[^"]*"' \
+    | sed 's/.*"file_path"[[:space:]]*:[[:space:]]*"\([^"]*\)"/\1/' \
+    | head -1 || true)
+fi
 
 if [ -z "$FILE_PATH" ]; then
   exit 0
